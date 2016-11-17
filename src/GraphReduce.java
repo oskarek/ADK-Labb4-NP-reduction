@@ -26,7 +26,7 @@ public class GraphReduce {
     public void printFirst(Graph graph) {
         io.println(graph.getNumberOfVertexes());
         io.println(graph.getEdgeNum());
-        io.println(m+2);
+        io.println(m + 2);
     }
 
     public void printRoles(Graph graph) {
@@ -67,9 +67,9 @@ public class GraphReduce {
             graph.addEdge(a, b);
         }
 
-        graph = addMissingEdges(graph);
         graph.addEdge(1,3);
         graph.addEdge(2,3);
+        graph = addMissingEdges(graph);
 
         return graph;
     }
