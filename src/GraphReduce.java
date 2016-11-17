@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class GraphReduce {
 
     Kattio io;
-    private int m;
+    private int k;
 
 
     GraphReduce() {
@@ -26,35 +26,30 @@ public class GraphReduce {
     public void printFirst(Graph graph) {
         io.println(graph.getNumberOfVertexes());
         io.println(graph.getEdgeNum());
-        io.println(m + 2);
+        io.println(k);
     }
 
     public void printRoles(Graph graph) {
-        ArrayList<Graph.Vertex> vertexes = graph.getVertexes();
-        for(Graph.Vertex vertex : vertexes) {
-
-            io.print(m+2);
-            for (int i = 1; i <= m+2; i++)
-                io.print(" " + i);
+        int vertexCount = graph.getNumberOfVertexes();
+        for (int i = 0; i < vertexCount; i++) {
+            io.print(k);
+            for (int j = 1; j <= k; j++)
+                io.print(" " + j);
             io.println();
         }
-
     }
     public void printScenes(Graph graph) {
         ArrayList<Graph.Vertex> vertexes = graph.getVertexes();
-        for(Graph.Vertex v : vertexes){
-            ArrayList<Graph.Edge> edges = v.getEdges();
-            for(Graph.Edge edge : edges) {
+        for(Graph.Vertex v : vertexes)
+            for(Graph.Edge edge : v.getEdges())
                 io.println("2 " + edge.getFrom() + " " + edge.getTo());
-            }
-        }
     }
 
     public Graph readGraph() {
         //+2 because we want to add 2 divas
         int v = io.getInt()+2;
         int e = io.getInt();
-        m = io.getInt();
+        k = io.getInt()+2;
         Graph graph = new Graph(v);
 
         for (int i = 0; i < e; i++) {
