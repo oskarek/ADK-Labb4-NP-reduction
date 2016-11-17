@@ -28,15 +28,6 @@ public class Graph {
         return getVertex(vertex).getEdges();
     }
 
-    public ArrayList<Integer> neighboursForVertex(int vertex) {
-        ArrayList<Integer> neighbours = new ArrayList<>();
-        for (Edge edge : edgesForVertex(vertex)) {
-            if (edge.getValue() > 0)
-                neighbours.add(edge.getTo());
-        }
-        return neighbours;
-    }
-
     void loadVertexes(int v) {
         for(int i = 1; i<=v; i++){
             addVertex(i);
@@ -60,24 +51,11 @@ public class Graph {
         return edges;
     }
 
-    public void addEdge(int from, int edgeTo, int capacity){
+    public void addEdge(int from, int edgeTo){
         Vertex v = getVertex(from);
-        Vertex r = getVertex(edgeTo);
-        ArrayList<Edge> edges = r.getEdges();
-        Boolean found = false;
-        for(Edge edge : edges){
-            if(edge.getTo() == from) {
-                edge.reversed().setValue(capacity);
-                found = true;
-            }
-        }
-        if(!found) {
-            Edge edge = v.addEdge(from, edgeTo, capacity);
-            Edge revEdge = r.addEdge(edgeTo, from, 0);
-            edge.setReversedEdge(revEdge);
-            revEdge.setReversedEdge(edge);
-        }
-
+        Edge edge = v.addEdge(from, edgeTo);
+        v.setHasEdge();
+        getVertex(edgeTo).setHasEdge();
     }
 
     public void removeEdge(int from, int to) {
@@ -90,6 +68,7 @@ public class Graph {
     }
 
     public class Vertex {
+        private Boolean hasEdge;
         private int value;
         private ArrayList<Edge> edges;
         public int getValue() { return value; }
@@ -103,14 +82,19 @@ public class Graph {
             return Optional.empty();
         }
 
+        public Boolean hasEdge(){ return hasEdge; }
+
+        public void setHasEdge() { hasEdge = true; }
+
         public Vertex(int value) {
+            hasEdge = false;
             this.value = value;
             edges = new ArrayList<>();
         }
 
-        public Edge addEdge(int edgeFrom, int edgeTo, int capacity){
+        public Edge addEdge(int edgeFrom, int edgeTo){
             edgeNum++;
-            Edge e = new Edge(edgeFrom, edgeTo, capacity);
+            Edge e = new Edge(edgeFrom, edgeTo);
             edges.add(e);
             return e;
         }
@@ -128,29 +112,16 @@ public class Graph {
     public static class Edge  {
         private int edgeFrom;
         private int edgeTo;
-        private int capacity;
-        private Edge reversedEdge;
 
-        public Edge(int edgeFrom, int edgeTo, int capacity){
+        public Edge(int edgeFrom, int edgeTo){
             this.edgeFrom = edgeFrom;
             this.edgeTo = edgeTo;
-            this.capacity = capacity;
         }
 
         public int getFrom() { return edgeFrom; }
 
         public int getTo() { return edgeTo; }
 
-        public int getValue() { return capacity; }
 
-        public void setValue(int value) { capacity = value; }
-
-        public Edge reversed() {
-            return reversedEdge;
-        }
-
-        public void setReversedEdge(Edge reversedEdge){
-            this.reversedEdge = reversedEdge;
-        }
     }
 }
