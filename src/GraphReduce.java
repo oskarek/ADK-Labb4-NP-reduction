@@ -32,13 +32,9 @@ public class GraphReduce {
     public void printRoles(Graph graph) {
         ArrayList<Graph.Vertex> vertexes = graph.getVertexes();
         for(Graph.Vertex vertex : vertexes) {
-            //Special case for the divas
-            if(vertex.getValue() == 1 || vertex.getValue() == 2) {
-                io.println("1 " + vertex.getValue());
-                continue;
-            }
-            io.print(m);
-            for (int i = 3; i <= m+2; i++)
+
+            io.print(m+2);
+            for (int i = 1; i <= m+2; i++)
                 io.print(" " + i);
             io.println();
         }
