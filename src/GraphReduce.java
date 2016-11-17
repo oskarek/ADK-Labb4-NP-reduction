@@ -48,11 +48,6 @@ public class GraphReduce {
         ArrayList<Graph.Vertex> vertexes = graph.getVertexes();
         for(Graph.Vertex v : vertexes){
             ArrayList<Graph.Edge> edges = v.getEdges();
-
-            //Edge case if a vertex has no neighbour, it creates an edge to the first role
-            if(!v.hasEdge()){
-                io.println("2 " + v.getValue() + " 3");
-            }
             for(Graph.Edge edge : edges) {
                 io.println("2 " + edge.getFrom() + " " + edge.getTo());
             }
@@ -72,9 +67,19 @@ public class GraphReduce {
             graph.addEdge(a, b);
         }
 
+        graph = addMissingEdges(graph);
         graph.addEdge(1,3);
         graph.addEdge(2,3);
 
+        return graph;
+    }
+
+    public Graph addMissingEdges(Graph graph) {
+        ArrayList<Graph.Vertex> vertexes = graph.getVertexes();
+        for(Graph.Vertex vertex : vertexes){
+            if(!vertex.hasEdge())
+                graph.addEdge(vertex.getValue(),3);
+        }
         return graph;
     }
 
