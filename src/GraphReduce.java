@@ -25,33 +25,22 @@ public class GraphReduce {
 
     public void printFirst(Graph graph) {
         io.println(graph.getNumberOfVertexes());
-        io.println(graph.getEdgeNum()+2);
+        io.println(graph.getEdgeNum());
         io.println(m+2);
     }
 
     public void printRoles(Graph graph) {
         ArrayList<Graph.Vertex> vertexes = graph.getVertexes();
-        //The divas roles
-        io.println("1 1");
-        io.println("1 2");
         for(Graph.Vertex vertex : vertexes) {
-            //Skip the divas
-            if(vertex.getValue() == 1 || vertex.getValue() == 2){
+            //Special case for the divas
+            if(vertex.getValue() == 1 || vertex.getValue() == 2) {
+                io.println("1 " + vertex.getValue());
                 continue;
             }
-            String s = "";
-            int p=0;
-            for(int i = 3; i<=m+2; i++){
-                if(i==m+2) {
-                    s += i;
-                    p++;
-                    continue;
-                }
-                s += i + " ";
-                p++;
-            }
-            s = p + " " + s;
-            io.println(s);
+            io.print(m);
+            for (int i = 3; i <= m+2; i++)
+                io.print(" " + i);
+            io.println();
         }
 
     }
@@ -82,6 +71,9 @@ public class GraphReduce {
             int b = io.getInt()+2;
             graph.addEdge(a, b);
         }
+
+        graph.addEdge(1,3);
+        graph.addEdge(2,3);
 
         return graph;
     }
