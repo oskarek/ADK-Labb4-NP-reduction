@@ -67,10 +67,9 @@ public class GraphReduce {
 
     public Graph addMissingEdges(Graph graph) {
         ArrayList<Graph.Vertex> vertexes = graph.getVertexes();
-        for(Graph.Vertex vertex : vertexes){
+        for(Graph.Vertex vertex : vertexes)
             if(!vertex.hasEdge())
                 graph.addEdge(vertex.getValue(),3);
-        }
         return graph;
     }
 
